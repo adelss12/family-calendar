@@ -1331,7 +1331,7 @@ function setAuthMode(mode){
   const confirmRow = $('passwordConfirmRow') || $('passwordConfirmInput')?.closest('.input-row');
   if(nameRow) nameRow.style.display = isSignup ? '' : 'none';
   if(confirmRow) confirmRow.style.display = isSignup ? '' : 'none';
-  $('lockTitle').textContent = isSignup ? 'إنشاء حساب جديد' : 'التقويم الشخصي';
+  $('lockTitle').textContent = isSignup ? 'إنشاء حساب جديد' : 'دخول المستخدم';
   $('lockSubtitle').textContent = isSignup ? 'أدخل بياناتك لإنشاء حساب جديد' : 'سجّل دخولك إلى حسابك';
   $('lockBtn').textContent = isSignup ? 'إنشاء الحساب' : 'دخول';
   $('createAccountBtn').textContent = isSignup ? 'لديك حساب؟ تسجيل الدخول' : 'إنشاء حساب جديد';
