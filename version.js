@@ -1,18 +1,16 @@
-// ==========================================
-// Family Calendar
-// Project Information
-// ==========================================
-
 const APP_INFO = Object.freeze({
 
     // اسم التطبيق
     name: "التقويم الشخصي",
 
-    // رقم الإصدار
-    version: "v20 Stable",
+    // الإصدار
+    version: "20.0.0",
+
+    // قناة الإصدار
+    channel: "Stable",
 
     // رقم البناء
-    build: "2026.07.12",
+    build: "20260712.001",
 
     // بيئة التشغيل
     environment: "Production",
