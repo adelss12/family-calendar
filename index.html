@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="التقويم" />
 <meta name="format-detection" content="telephone=no" />
-<title>التقويم الشخصي v20</title>
+<title>جارٍ تحميل التطبيق...</title>
 <!-- إصدار 15: حماية المواعيد من الفقد عند تسجيل الخروج + تخزين Firebase ثابت -->
 <!-- v8: improved event sharing errors and invitation writes -->
 <style>
@@ -751,7 +751,7 @@
   
 <!-- Main Application -->
 <script>
-  console.log("Application Info:", APP_INFO);
+  document.title = `${APP_INFO.name} - ${APP_INFO.version}`;
 /* ============================================================
    التقويم الشخصي
    - الأحداث في localStorage (للسرعة)
