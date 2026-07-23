@@ -417,7 +417,41 @@
     .today-logout-btn{left:10px;bottom:12px;width:40px;height:40px;}
     .admin-tabs{grid-template-columns:1fr;}
   }
+.bottom-bar{
+    position:fixed;
+    left:12px;
+    right:12px;
+    bottom:12px;
+    height:60px;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    background:rgba(21,29,46,.95);
+    border:1px solid var(--border);
+    border-radius:16px;
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    z-index:999;
+}
 
+.bottom-btn{
+    flex:1;
+    height:100%;
+    border:none;
+    background:transparent;
+    color:#fff;
+    font-size:1.2rem;
+    cursor:pointer;
+}
+
+.bottom-btn:not(:last-child){
+    border-left:1px solid rgba(255,255,255,.08);
+}
+
+.bottom-btn:disabled{
+    opacity:.45;
+    cursor:default;
+}
 </style>
 </head>
 <body>
@@ -508,10 +542,7 @@
       <div class="invite-list" id="inviteList"></div>
     </section>
 
-    <!-- زر المناسبات السعودية -->
-    <div class="sa-quick">
-      <button class="btn btn-secondary" id="saManageBtn" type="button">🇸🇦 المناسبات السعودية</button>
-    </div>
+    
 
 
   </main>
@@ -1486,6 +1517,7 @@ async function enterApp(user){
   if(isAdminUser(user)) attachAdminDirectoryListener(); else detachAdminDirectoryListener();
   $('lockScreen').style.display='none';
   $('appMain').style.display='';
+  $('bottomBar').style.display='flex';
   $('otpHint').textContent='';
   refreshAll();
   refreshBackupList();
@@ -1533,6 +1565,7 @@ async function doLogout(){
   setCurrentUser(null);
   _eventsCache = [];
   $('appMain').style.display='none';
+  $('bottomBar').style.display='none';
   $('lockScreen').style.display='';
   initLock();
 }
@@ -1557,7 +1590,6 @@ $('backupBtn').addEventListener('click', ()=>{
 });
 $('backupClose').addEventListener('click', ()=> $('backupModal').classList.remove('show'));
 $('backupModal').addEventListener('click', e=>{ if(e.target.id==='backupModal') $('backupModal').classList.remove('show'); });
-$('saManageBtn').addEventListener('click', ()=> $('saModal').classList.add('show'));
 $('saClose').addEventListener('click', ()=> $('saModal').classList.remove('show'));
 $('saModal').addEventListener('click', e=>{ if(e.target.id==='saModal') $('saModal').classList.remove('show'); });
 
@@ -2953,5 +2985,30 @@ $('saRemove').addEventListener('click', async ()=>{
 initFirebase();
 initLock();
 </script>
+<!-- الشريط السفلي -->
+<nav class="bottom-bar" id="bottomBar" style="display:none;">
+
+    <button
+    class="bottom-btn active"
+    id="saudiEventsBottomBtn"
+    title="المناسبات السعودية"
+    onclick="$('saModal').classList.add('show')">
+    SA
+</button>
+
+    <button class="bottom-btn" disabled title="قريبًا">
+        ⚙️
+    </button>
+
+    <button class="bottom-btn" disabled title="قريبًا">
+        📊
+    </button>
+
+    <button class="bottom-btn" disabled title="قريبًا">
+        🔔
+    </button>
+    
+
+</nav>
 </body>
 </html>
