@@ -452,6 +452,18 @@
     opacity:.45;
     cursor:default;
 }
+.today-inline-date{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:6px;
+    flex-wrap:nowrap;
+white-space:nowrap;
+font-size:clamp(.68rem, 2.8vw, 1rem);
+        font-weight:700;
+    text-align:center;
+}
 </style>
 </head>
 <body>
@@ -488,20 +500,18 @@
   <main id="appMain" style="display:none;">
     <!-- بطاقة اليوم -->
     <section class="today-card">
-      <div class="today-block">
-        <h3>اليوم</h3>
-        <div class="big" id="todayName"></div>
-        <div class="small" id="todayGreg"></div>
-      </div>
-      <div class="today-divider"></div>
-      <div class="today-block">
-        <h3>التاريخ الهجري</h3>
-        <div class="big" id="todayHijri"></div>
-        <div class="small" id="todayHijriDay"></div>
-      </div>
+      <div class="today-inline-date">
+    <span id="todayName"></span>
+    <span>|</span>
+    <span id="todayGreg"></span>
+    <span>الموافق</span>
+    <span id="todayHijri"></span>
+    <span id="todayHijriDay" style="display:none;"></span>
+</div>
+
       <div class="today-welcome" id="welcomeLine">👋 أهلاً، <span id="welcomeName">عادل</span></div>
       <div class="sync-status" id="syncStatus">☁️ المزامنة جاهزة</div>
-      <button class="today-logout-btn" id="topLogoutBtn" type="button" title="تسجيل الخروج" aria-label="تسجيل الخروج">🚪</button>
+      
     </section>
 
     <!-- أزرار سريعة + التبويبات -->
@@ -1564,8 +1574,9 @@ async function doLogout(){
   if(_fbReady) await firebase.auth().signOut().catch(()=>{});
   setCurrentUser(null);
   _eventsCache = [];
-  $('appMain').style.display='none';
-  $('bottomBar').style.display='none';
+  $('appMain').style.setProperty('display', 'none', 'important');
+$('bottomBar').style.display='none';
+window.scrollTo(0, 0);
   $('lockScreen').style.display='';
   initLock();
 }
@@ -1580,7 +1591,7 @@ $('accountBtn').addEventListener('click', ()=>{
   refreshAccountModal();
   $('accountModal').classList.add('show');
 });
-$('topLogoutBtn').addEventListener('click', doLogout);
+
 $('accountClose').addEventListener('click', ()=> $('accountModal').classList.remove('show'));
 $('accountModal').addEventListener('click', e=>{ if(e.target.id==='accountModal') $('accountModal').classList.remove('show'); });
 
@@ -2450,9 +2461,12 @@ $('adminUsersModal').addEventListener('click',e=>{if(e.target.id==='adminUsersMo
 function renderToday(){
   const now = new Date();
   $('todayName').textContent = arDays[now.getDay()];
-  $('todayGreg').textContent = `${now.getDate()} ${arMonths[now.getMonth()]} ${now.getFullYear()} م`;
+  $('todayGreg').textContent =
+  `${now.getDate()} / ${arMonths[now.getMonth()]} (${now.getMonth() + 1}) / ${now.getFullYear()} م`;
   const h = gregToHijri(now);
-  $('todayHijri').textContent    = h ? formatHijri(h) : '—';
+  $('todayHijri').textContent = h
+  ? `${h.day} / ${hijriMonths[h.month - 1]} (${h.month}) / ${h.year}هـ`
+  : '—';
   $('todayHijriDay').textContent = h ? `يوم ${arDays[now.getDay()]}` : '';
 }
 
@@ -3009,6 +3023,14 @@ initLock();
     </button>
     
 
-</nav>
+<button
+    class="bottom-btn"
+    type="button"
+    title="تسجيل الخروج"
+    aria-label="تسجيل الخروج"
+    onclick="doLogout()">
+    ⏻
+</button>
+  </nav>
 </body>
 </html>
